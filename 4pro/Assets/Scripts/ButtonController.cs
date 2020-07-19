@@ -10,20 +10,22 @@ public class ButtonController : MonoBehaviour
 {
     //TouchManager tm;
     private Image button;
-    private int fingerId = -1;
-    public int fingerNum = 0;
+    //private int fingerId = -1;
+    //private int fingerNum = 0;
     private bool isTouched = false;
-    public bool IsTouched
+
+    public bool IsTouched //プロパティ
     {
         get { return this.isTouched; }
     }
 
     private void Awake()
     {
-        var eventTrigger = GetComponent<EventTrigger>();
+        //var eventTrigger = GetComponent<EventTrigger>();
 
-        var pointerDownEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
+        //var pointerDownEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
 
+        /*
         pointerDownEntry
             .callback
             .AddListener((data) => OnPointerDownDelegate((PointerEventData)data));
@@ -31,6 +33,7 @@ public class ButtonController : MonoBehaviour
         eventTrigger
             .triggers
             .Add(pointerDownEntry);
+        */
     }
 
     // Start is called before the first frame update
@@ -38,13 +41,16 @@ public class ButtonController : MonoBehaviour
     {
         //this.tm = new TouchManager();
         button = GetComponent<Image>();
-        button.color = Color.red;
+        //button.color = Color.red;
 
     }
 
     // Update is called once per frame
     void Update()
     {
+
+
+
         // タッチ状態更新
         //this.tm.update();
 
@@ -77,6 +83,8 @@ public class ButtonController : MonoBehaviour
             }
         }*/
 
+
+        /*
         var touchCount = Input.touchCount;
         fingerNum = touchCount;
 
@@ -113,8 +121,21 @@ public class ButtonController : MonoBehaviour
                 }
             }
         }
+        */
     }
 
+    public void onTouchAct()
+    {
+        isTouched = true;
+    }
+
+    public void onTouchExit()
+    {
+        isTouched = false;
+    }
+
+
+    /*
     private void OnPointerDownDelegate(PointerEventData data)//タッチされたことと座標を取得
     { //どのタッチがどの指か振り分け
         var touchCount = Input.touchCount;
@@ -140,4 +161,5 @@ public class ButtonController : MonoBehaviour
         }
         fingerId = Input.GetTouch(minIndex).fingerId;
     }
+    */
 }

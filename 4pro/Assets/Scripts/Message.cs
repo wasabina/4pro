@@ -9,24 +9,30 @@ public class Message : MonoBehaviour
     private Text message;
     private int fingerNum = 0;
 
+    public GameObject bm;
+
     //GameObject button;
-    public ButtonController script;
+    //public ButtonController script;
 
     // Start is called before the first frame update
     void Start()
     {
         message = GetComponent<Text>();
-        message.text = "個のボタンが押されています";
+        message.text = "0個のボタンが押されています";
 
         //button = GameObject.Find("Button1");
         //script = button.GetComponent<ButtonController>();
-        bool isTouched = false;
+        //bool isTouched = false;
     }
 
-    // Update is called once per frame
+    // Update is called once per frames
     void Update()
     {
-        isTouched = script.IsTouched;
+        fingerNum = bm.GetComponent<ButtonManager>().NumOfTouchButtons;
+        message.text = fingerNum + "個のボタンが押されています";
+
+        /*
+        //isTouched = script.IsTouched;
         bool t = script.IsTouched;
         //var touchCount = Input.touchCount;
         var b = new ArrayList();
@@ -43,8 +49,9 @@ public class Message : MonoBehaviour
         //fingerNum = script.fingerNum;
         foreach (var a in b)
         {
-            if (a.IsTouched) fingerNum++;
+            //if (a.t) fingerNum++;
         }
         message.text = fingerNum + "個のボタンが押されています";
+        */
     }
 }
