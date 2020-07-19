@@ -18,7 +18,7 @@ public class Message : MonoBehaviour
     void Start()
     {
         message = GetComponent<Text>();
-        message.text = "0個のボタンが押されています";
+        message.text = "0個のボタンに触れています";
 
         //button = GameObject.Find("Button1");
         //script = button.GetComponent<ButtonController>();
@@ -29,7 +29,7 @@ public class Message : MonoBehaviour
     void Update()
     {
         fingerNum = bm.GetComponent<ButtonManager>().NumOfTouchButtons;
-        message.text = fingerNum + "個のボタンが押されています";
+        message.text = fingerNum + "個のボタンに触れています";
 
         /*
         //isTouched = script.IsTouched;

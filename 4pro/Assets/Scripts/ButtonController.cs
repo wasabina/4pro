@@ -19,13 +19,14 @@ public class ButtonController : MonoBehaviour
         get { return this.isTouched; }
     }
 
+    /*
     private void Awake()
     {
         //var eventTrigger = GetComponent<EventTrigger>();
 
         //var pointerDownEntry = new EventTrigger.Entry { eventID = EventTriggerType.PointerDown };
 
-        /*
+        
         pointerDownEntry
             .callback
             .AddListener((data) => OnPointerDownDelegate((PointerEventData)data));
@@ -33,15 +34,15 @@ public class ButtonController : MonoBehaviour
         eventTrigger
             .triggers
             .Add(pointerDownEntry);
-        */
-    }
+        
+    }*/
 
     // Start is called before the first frame update
     void Start()
     {
         //this.tm = new TouchManager();
         button = GetComponent<Image>();
-        //button.color = Color.red;
+        button.color = Color.red;
 
     }
 
@@ -127,11 +128,13 @@ public class ButtonController : MonoBehaviour
     public void onTouchAct()
     {
         isTouched = true;
+        button.color = Color.blue;
     }
 
     public void onTouchExit()
     {
         isTouched = false;
+        button.color = Color.red;
     }
 
 
