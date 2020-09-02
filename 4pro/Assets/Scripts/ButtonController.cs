@@ -9,6 +9,7 @@ public class ButtonController : MonoBehaviour
 {
     private Image button;
     private bool isTouched = false;
+    Color color1, color2;
 
     public bool IsTouched //プロパティ
     {
@@ -20,7 +21,11 @@ public class ButtonController : MonoBehaviour
     void Start()
     {
         button = GetComponent<Image>();
-        button.color = Color.red;
+        ColorUtility.TryParseHtmlString("#DBDBDB", out color1);
+        ColorUtility.TryParseHtmlString("#AAEEFF", out color2);
+        button.color = color1;
+        float size = PlayerPrefs.GetFloat("buttonSize", 1.0f);
+        button.transform.localScale = new Vector3(size, size, 1.0f);
 
     }
 
@@ -33,12 +38,12 @@ public class ButtonController : MonoBehaviour
     public void onTouchAct()
     {
         isTouched = true;
-        button.color = Color.blue;
+        button.color = color2;
     }
 
     public void onTouchExit()
     {
         isTouched = false;
-        button.color = Color.red;
+        button.color = color1;
     }
 }
