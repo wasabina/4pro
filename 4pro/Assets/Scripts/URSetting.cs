@@ -14,7 +14,7 @@ public class URSetting : MonoBehaviour
     void Start()
     {
         buttonSize.value = PlayerPrefs.GetFloat("buttonSize", 1.0f);
-        buttonLayout.value = PlayerPrefs.GetInt("buttonSize", 0);
+        buttonLayout.value = PlayerPrefs.GetInt("buttonLayout", 0);
 
         SaveButtonSize();
         SaveButtonLayout();
@@ -49,7 +49,7 @@ public class URSetting : MonoBehaviour
         PlayerPrefs.DeleteKey("buttonLayout");
 
         buttonSize.value = PlayerPrefs.GetFloat("buttonSize", 1.0f);
-        buttonLayout.value = PlayerPrefs.GetInt("buttonSize", 0);
+        buttonLayout.value = PlayerPrefs.GetInt("buttonLayout", 0);
 
         SaveButtonSize();
         SaveButtonLayout();
