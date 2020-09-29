@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class ButtonManager : MonoBehaviour
 {
     [SerializeField]
-    GameObject[] buttons = new GameObject[14];
+    GameObject[] buttons = new GameObject[10];
 
     private int numOfButtons;
     private int numOfTouchButtons;
