@@ -21,7 +21,7 @@ public class PCController : MonoBehaviour //UniWebViewに直接貼らないと�
 
     private bool settingFlag;
     private bool timeFlag;
-    private float timeLimit = 5; //[s]
+    private float timeLimit = 300; //[s]
     private float currentTime; // 残り時間タイマー[s]
     private int minutes, seconds;
     private Sprite s_setting, s_back;
@@ -96,10 +96,16 @@ public class PCController : MonoBehaviour //UniWebViewに直接貼らないと�
     {
         if (SceneManager.GetActiveScene().name == "PCTest5")
         {
+            string s = PlayerPrefs.GetString("data", "") + string.Format(SceneManager.GetActiveScene().name + ":{0:000}s", timeLimit - (minutes * 60 + seconds)) + " ";
+            PlayerPrefs.SetString("data", s);
+            PlayerPrefs.Save();
             SceneManager.LoadScene("End");
         }
         else
         {
+            string s = PlayerPrefs.GetString("data", "") + string.Format(SceneManager.GetActiveScene().name + ":{0:000}s", timeLimit - (minutes * 60 + seconds)) + " ";
+            PlayerPrefs.SetString("data", s);
+            PlayerPrefs.Save();
             SceneManager.LoadScene("PCTest" + (SceneUtility.GetBuildIndexByScenePath(SceneManager.GetActiveScene().name) + 1).ToString());
         }
     }
