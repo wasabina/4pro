@@ -8,10 +8,14 @@ public class DOController : MonoBehaviour
 {
 
     public Text text_data;
+    public GameObject panel_reset;
+    public InputField inputField;//pass入力
+    private string password = "g17916im"; //初期化のパスワード
 
     // Start is called before the first frame update
     void Start()
     {
+        panel_reset.SetActive(false);
         text_data.text = PlayerPrefs.GetString("data", "");
     }
 
@@ -28,7 +32,23 @@ public class DOController : MonoBehaviour
 
     public void resetButtonClicked()
     {
-        PlayerPrefs.DeleteAll();
-        text_data.text = PlayerPrefs.GetString("data", "");
+        panel_reset.SetActive(true);
+    }
+
+    public void inputText()
+    {
+        Debug.Log(password);
+        if (inputField.text == password)
+        {
+            PlayerPrefs.DeleteAll();
+            text_data.text = PlayerPrefs.GetString("data", "");
+            inputField.text = "";
+            panel_reset.SetActive(false);
+        }
+        else
+        {
+            inputField.text = "";
+            panel_reset.SetActive(false);
+        }
     }
 }

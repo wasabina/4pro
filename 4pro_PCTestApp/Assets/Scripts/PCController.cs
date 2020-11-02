@@ -21,7 +21,7 @@ public class PCController : MonoBehaviour //UniWebViewに直接貼らないと�
 
     private bool settingFlag;
     private bool timeFlag;
-    private float timeLimit = 300; //[s]
+    private float timeLimit = 10; //[s]
     private float currentTime; // 残り時間タイマー[s]
     private int minutes, seconds;
     private Sprite s_setting, s_back;
