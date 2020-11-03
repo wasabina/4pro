@@ -43,13 +43,6 @@ public class HomeController : MonoBehaviour
         SceneManager.LoadScene("PCTest1");
     }
 
-    public void homeButtonClicked()
-    {
-        string s = PlayerPrefs.GetString("data", "") + "\n";
-        PlayerPrefs.SetString("data", s);
-        PlayerPrefs.Save();
-        SceneManager.LoadScene("Home");
-    }
 
     public void developerOptionsButtonClicked()
     {
@@ -80,5 +73,10 @@ public class HomeController : MonoBehaviour
             text_pass.text = "パスワードが違います";
             inputField.text = "";
         }
+    }
+
+    public void subButtonClicked()
+    {
+        SceneManager.LoadScene("Sub");
     }
 }

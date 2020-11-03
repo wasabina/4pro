@@ -24,9 +24,15 @@ EditorBuildSettings:
     path: Assets/Scenes/PCTest5.unity
     guid: 576cf577787ac40c5ae5120e4a1da973
   - enabled: 1
+    path: Assets/Scenes/PCTest6.unity
+    guid: a5acc9e42c19e43bc941442e16a305a1
+  - enabled: 1
     path: Assets/Scenes/End.unity
     guid: 1e84ccf0a60b84cfdbdfb7ec93dfa3c6
   - enabled: 1
     path: Assets/Scenes/Data.unity
     guid: 3f38f71ee1b9b440299cce440496b704
+  - enabled: 1
+    path: Assets/Scenes/Sub.unity
+    guid: affa19b707b3f49f890cbe681e9eb550
   m_configObjects: {}

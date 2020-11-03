@@ -26,13 +26,17 @@ public class ButtonManager : MonoBehaviour
             var touch = Input.GetTouch(i);
             for (var j = 0; j < numOfButtons; j++)
             {
-                var isTouched = buttons[j].GetComponent<ButtonController>().IsTouched;
-                if (isTouched) numOfTouchButtons++;
-            }
-            for (var j = 0; j < numOfButtons; j++)
-            {
-                var isTouched = buttons[j].GetComponent<ButtonControllerT>().IsTouched;
-                if (isTouched) numOfTouchButtons++;
+                if (buttons[j].GetComponent<ButtonController>() != null)
+                {
+                    var isTouched = buttons[j].GetComponent<ButtonController>().IsTouched;
+                    if (isTouched) numOfTouchButtons++;
+                }
+
+                if (buttons[j].GetComponent<ButtonControllerT>() != null)
+                {
+                    var isTouched = buttons[j].GetComponent<ButtonControllerT>().IsTouched;
+                    if (isTouched) numOfTouchButtons++;
+                }
             }
         }
     }

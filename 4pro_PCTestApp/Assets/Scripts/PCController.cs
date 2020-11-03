@@ -9,8 +9,7 @@ public class PCController : MonoBehaviour //UniWebViewに直接貼らないと�
 {
     private int fingerNum = 0;
     public GameObject bm; //ButtonManager
-    [SerializeField]
-    private int requiredFingerNum = 10;
+    private int requiredFingerNum;
     public Text text_time;
     public Text text_touchedNum;
     public GameObject panel_start;
@@ -21,7 +20,7 @@ public class PCController : MonoBehaviour //UniWebViewに直接貼らないと�
 
     private bool settingFlag;
     private bool timeFlag;
-    private float timeLimit = 10; //[s]
+    private float timeLimit = 300; //[s]
     private float currentTime; // 残り時間タイマー[s]
     private int minutes, seconds;
     private Sprite s_setting, s_back;
@@ -33,6 +32,15 @@ public class PCController : MonoBehaviour //UniWebViewに直接貼らないと�
         settingFlag = false;
         timeFlag = false;
         currentTime = timeLimit;
+        var sceneName = SceneManager.GetActiveScene().name;
+        if (sceneName == "PCTest6")
+        {
+            requiredFingerNum = 5;
+        }
+        else
+        {
+            requiredFingerNum = 10;
+        }
         panel_start.SetActive(true);
         panel_finish.SetActive(false);
         panel_setting.SetActive(false);
@@ -94,7 +102,7 @@ public class PCController : MonoBehaviour //UniWebViewに直接貼らないと�
 
     public void NextButtonClicked()
     {
-        if (SceneManager.GetActiveScene().name == "PCTest5")
+        if (SceneManager.GetActiveScene().name == "PCTest6")
         {
             string s = PlayerPrefs.GetString("data", "") + string.Format(SceneManager.GetActiveScene().name + ":{0:000}s", timeLimit - (minutes * 60 + seconds)) + " ";
             PlayerPrefs.SetString("data", s);
