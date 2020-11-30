@@ -16,6 +16,8 @@ public class HomeController : MonoBehaviour
     public InputField inputField;//pass入力
     private string password = "g17916im"; //設定画面に入るためのパスワード
     public Text text_pass;
+    public InputField iF_timeLimit;
+    public static int timeLimit = 300;
 
     // Start is called before the first frame update
     void Start()
@@ -27,6 +29,7 @@ public class HomeController : MonoBehaviour
         s_option = Resources.Load<Sprite>("icon_options");
         s_back = Resources.Load<Sprite>("icon_back");
         text_pass.text = "";
+        iF_timeLimit.text = timeLimit.ToString();
     }
 
     // Update is called once per frame
@@ -73,6 +76,16 @@ public class HomeController : MonoBehaviour
             text_pass.text = "パスワードが違います";
             inputField.text = "";
         }
+    }
+
+    public void inputTimeLimit()
+    {
+        timeLimit = int.Parse(iF_timeLimit.text);
+        iF_timeLimit.text = timeLimit.ToString();
+    }
+
+    public static int getTimeLimit() {
+        return timeLimit;
     }
 
     public void subButtonClicked()

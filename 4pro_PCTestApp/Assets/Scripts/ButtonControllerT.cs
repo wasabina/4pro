@@ -36,9 +36,9 @@ public class ButtonControllerT : MonoBehaviour
         }
         else
         {
-            size = 1.2f;
+            size = 1.3f;
         }
-        button.transform.localScale = new Vector3(size * 1.3f, size * 0.75f, 1.0f);
+        button.transform.localScale = new Vector3(size * 1.0f, size * 0.75f, 1.0f);
 
     }
 
