@@ -4,21 +4,19 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System;
+using UnityEngine.Video;
 
 public class UR_A : MonoBehaviour
 {
     private int fingerNum = 0;
     public GameObject bm; //ButtonManager
     private int requiredFingerNum;
-    public Text text_time;
     public Text text_touchedNum;
     public GameObject panel_start;
     public GameObject panel_finish;
     public GameObject panel_setting;
-    public Text text_result;
     public Button button_setting;
-    public Button button_giveUp;
-    public Button button_countStart;
+    public VideoPlayer rI_video;
 
     private bool settingFlag;
     private bool timeFlag;
@@ -26,7 +24,7 @@ public class UR_A : MonoBehaviour
     private float currentTime; // 残り時間タイマー[s]
     private int minutes, seconds;
     private Sprite s_setting, s_back;
-
+    private RawImage rawimage;
 
     // Start is called before the first frame update
     void Start()
@@ -38,11 +36,10 @@ public class UR_A : MonoBehaviour
         panel_start.SetActive(true);
         panel_finish.SetActive(false);
         panel_setting.SetActive(false);
-        button_giveUp.interactable = false;
-        button_countStart.interactable = false;
         text_touchedNum.text = "0個のボタンに触れています";
         s_setting = Resources.Load<Sprite>("icon_settings");
         s_back = Resources.Load<Sprite>("icon_back");
+        rawimage = rI_video.GetComponents<RawImage>()[0];
     }
 
     // Update is called once per frame
@@ -51,17 +48,19 @@ public class UR_A : MonoBehaviour
         fingerNum = bm.GetComponent<ButtonManager>().NumOfTouchButtons;
         text_touchedNum.text = fingerNum + "個のボタンに触れています";
 
-        if (fingerNum >= requiredFingerNum && timeFlag == true/* || currentTime <= 0.0f*/)
+        if (fingerNum >= requiredFingerNum)
         {
-            timeFlag = false;
-            text_result.text = "結果\n" + "\n" + string.Format("かかった時間：{0:000}秒", timeLimit - (minutes * 60 + seconds));
-            panel_finish.SetActive(true);
-            button_countStart.interactable = false;
+            rawimage.color = new Color(255.0f, 255.0f, 255.0f, 255.0f);
+            Play();
+        }
+        else
+        {
+            rawimage.color = new Color(255.0f, 255.0f, 255.0f, 0.0f);
         }
 
         if (currentTime <= 0.0f)
         {
-            button_giveUp.interactable = true;
+            
         }
 
         //----------時間計測---------------
@@ -78,7 +77,6 @@ public class UR_A : MonoBehaviour
             {
                 minutes = Mathf.FloorToInt(currentTime / 60F);
                 seconds = Mathf.FloorToInt(currentTime - minutes * 60);
-                text_time.text = string.Format("残り：{0:00}分{1:00}秒", minutes, seconds);
             }
         }
     }
@@ -104,38 +102,35 @@ public class UR_A : MonoBehaviour
     public void StartButtonClicked()
     {
         panel_start.SetActive(false);
-        button_countStart.interactable = true;
         //timeFlag = true;
-    }
-
-    public void CountButtonClicked()
-    {
-        timeFlag = true;
     }
 
     public void NextButtonClicked()
     {
-        if (SceneManager.GetActiveScene().name == "PCTest6")
+        string s = PlayerPrefs.GetString("data", "") + string.Format(SceneManager.GetActiveScene().name + ":{0:000}s", timeLimit - (minutes * 60 + seconds)) + " ";
+        PlayerPrefs.SetString("data", s);
+        PlayerPrefs.Save();
+        SceneManager.LoadScene("URTest1");
+    }
+
+    public void Play()
+    {
+        if (!rI_video.isPlaying)
         {
-            string s = PlayerPrefs.GetString("data", "") + string.Format(SceneManager.GetActiveScene().name + ":{0:000}s", timeLimit - (minutes * 60 + seconds)) + " ";
-            PlayerPrefs.SetString("data", s);
-            PlayerPrefs.Save();
-            SceneManager.LoadScene("End");
-        }
-        else
-        {
-            string s = PlayerPrefs.GetString("data", "") + string.Format(SceneManager.GetActiveScene().name + ":{0:000}s", timeLimit - (minutes * 60 + seconds)) + " ";
-            PlayerPrefs.SetString("data", s);
-            PlayerPrefs.Save();
-            SceneManager.LoadScene("PCTest" + (SceneUtility.GetBuildIndexByScenePath(SceneManager.GetActiveScene().name) + 1).ToString());
+            rI_video.Play();
         }
     }
 
-    public void giveUp()
+    public void Pause()
     {
-        timeFlag = false;
-        text_result.text = "結果\n" + "\n" + string.Format("かかった時間：{0:000}秒", timeLimit - (minutes * 60 + seconds));
-        panel_finish.SetActive(true);
-        button_countStart.interactable = false;
+        if (rI_video.isPlaying)
+        {
+            rI_video.Pause();
+        }
+    }
+
+    public void Stop()
+    {
+        rI_video.Stop();
     }
 }
