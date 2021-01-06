@@ -13,6 +13,10 @@ public class URController : MonoBehaviour
     public GameObject panel_end;
     public Text text_alert;
     public Text text_hand;
+    public Text checkA;
+    public Text checkB;
+    public Text checkC;
+    public Text checkD;
 
     // Start is called before the first frame update
     void Start()
@@ -30,6 +34,12 @@ public class URController : MonoBehaviour
         else
         {
             text_hand.text = "利き手：　左";
+        }
+
+        if(UR_A.AisFinished())
+        {
+            checkA.text = "済";
+            checkA.color = new Color(187.0f/255.0f, 136.0f/255.0f, 255.0f/255.0f, 255.0f/255.0f);
         }
 
     }
@@ -85,7 +95,7 @@ public class URController : MonoBehaviour
 
     public void nextClicked()
     {
-        if (true)
+        if (!true)
         {
             text_alert.text = "未実施のパターンがあります";
         }

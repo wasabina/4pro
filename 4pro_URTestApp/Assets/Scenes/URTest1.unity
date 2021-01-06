@@ -145,6 +145,10 @@ MonoBehaviour:
   panel_end: {fileID: 1365854247}
   text_alert: {fileID: 1034457274}
   text_hand: {fileID: 331082327}
+  checkA: {fileID: 2050671703}
+  checkB: {fileID: 901546578}
+  checkC: {fileID: 1908039946}
+  checkD: {fileID: 1036267140}
 --- !u!4 &74378766
 Transform:
   m_ObjectHideFlags: 0

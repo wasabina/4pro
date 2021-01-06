@@ -19,14 +19,10 @@ public class OthersController : MonoBehaviour
 
     public void homeButtonClicked()//End->Homeのみ
     {
+        UR_A.setAisFinished();
         string s = PlayerPrefs.GetString("data2", "") + "\n";
         PlayerPrefs.SetString("data2", s);
         PlayerPrefs.Save();
-        SceneManager.LoadScene("Home");
-    }
-
-    public void backButtonClicked()
-    {
         SceneManager.LoadScene("Home");
     }
 }
