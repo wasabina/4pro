@@ -30,14 +30,7 @@ public class ButtonController : MonoBehaviour
         //size = PlayerPrefs.GetFloat("buttonSize", 1.0f);
         //テストアプリではサイズ固定
         var sceneName = SceneManager.GetActiveScene().name;
-        if (sceneName == "PCTest4" || sceneName == "PCTest5")
-        {
-            size = 2.0f;
-        }
-        else
-        {
-            size = 1.3f;
-        }
+        size = 1.4f;
         button.transform.localScale = new Vector3(size, size, 1.0f);
 
     }

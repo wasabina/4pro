@@ -131,7 +131,7 @@ public class UR_A : MonoBehaviour
 
     IEnumerator postponement()//指が離れてから2秒の猶予をつける
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(1);
         postponementFlag = false;
     }
 
