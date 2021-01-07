@@ -43,9 +43,17 @@ public class UR_D : MonoBehaviour//利き手固定
 
     private static bool isFinished;
 
+    //
+    private float Interval = 0.1f;
+    private float _time_cnt;
+    private int _frames;
+    private float _time_mn;
+    private float _fps;
+
     // Start is called before the first frame update
     void Start()
     {
+        //Application.targetFrameRate = 30;
         settingFlag = false;
         timeFlag = false;
         requiredFingerNum = 3;
@@ -78,6 +86,7 @@ public class UR_D : MonoBehaviour//利き手固定
             if (playable)
             {
                 Play();
+                StartCoroutine("move");
                 playable = false;
             }
             if (!timeFlag) timeFlag = true;
@@ -102,7 +111,7 @@ public class UR_D : MonoBehaviour//利き手固定
                 visibleTime += Time.deltaTime;
                 Text_visibleTime.GetComponent<Text>().text = visibleTime.ToString("F2");
                 postponementFlag = true;
-                StopAllCoroutines();
+                StopCoroutine("postponement");
             }
         }
         else
@@ -158,12 +167,76 @@ public class UR_D : MonoBehaviour//利き手固定
             }
         }
 
+        /*  fps  */
+        _time_mn -= Time.deltaTime;
+        _time_cnt += Time.timeScale / Time.deltaTime;
+        _frames++;
+
+        if (0 < _time_mn) return;
+
+        _fps = _time_cnt / _frames;
+        _time_mn = Interval;
+        _time_cnt = 0;
+        _frames = 0;
+
+        Debug.Log("FPS: " + _fps.ToString("f2"));
+
     }
 
     IEnumerator postponement()//指が離れてから2秒の猶予をつける
     {
         yield return new WaitForSeconds(1);
         postponementFlag = false;
+    }
+
+    IEnumerator move()
+    {
+        yield return new WaitForSeconds(19);
+        yield return StartCoroutine("slide");
+        yield return new WaitForSeconds(19);
+        yield return StartCoroutine("slide");
+        yield return new WaitForSeconds(19);
+        yield return StartCoroutine("slide");
+        yield return new WaitForSeconds(19);
+        yield return StartCoroutine("slide");
+        yield return new WaitForSeconds(19);
+        yield return StartCoroutine("slide");
+        yield return new WaitForSeconds(19);
+        yield return StartCoroutine("slide");
+    }
+
+    IEnumerator slide()
+    {
+        // 現在のposition
+        Vector3 currentPosition = pos.transform.localPosition;
+        float curX = pos.transform.localPosition.x;
+
+        // 目標のposition
+        Vector3 targetPosition = new Vector3(-1 * curX, 0.0f, 0.0f);
+
+        float sumTime = 0.0f;
+        while (true)
+        {
+            // Coroutine開始フレームから何秒経過したか
+            sumTime += Time.deltaTime;
+            // 指定された時間に対して経過した時間の割合
+            float ratio = sumTime / 19;//19秒かけて推移
+            /*
+            transform.SetPositionAndRotation(
+                Vector3.Lerp(currentPosition, targetPosition, ratio),
+                Quaternion.Lerp(currentRotation, targetRotation, ratio)
+            );*/
+            pos.transform.localPosition = Vector3.Lerp(currentPosition, targetPosition, ratio);
+
+            if (ratio > 1.0f)
+            {
+                // 目標の値に到達したらこのCoroutineを終了する
+                // ~.Lerpは割合を示す引数は0 ~ 1の間にClampされるので1より大きくても問題なし
+                break;
+            }
+
+            yield return null;
+        }
     }
 
     public static bool getisFinished()

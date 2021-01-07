@@ -46,6 +46,7 @@ public class UR_A : MonoBehaviour//利き手固定
     // Start is called before the first frame update
     void Start()
     {
+        //Application.targetFrameRate = 30;
         settingFlag = false;
         timeFlag = false;
         requiredFingerNum = 3;

@@ -17,6 +17,7 @@ public class SubController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Application.targetFrameRate = 30;
         requiredFingerNum = 10;
         text_touchedNum.text = "0個のボタンに触れています";
         text_judge.SetActive(false);

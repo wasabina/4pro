@@ -48,6 +48,7 @@ public class UR_C : MonoBehaviour//離散移動
     // Start is called before the first frame update
     void Start()
     {
+        //Application.targetFrameRate = 30;
         settingFlag = false;
         timeFlag = false;
         requiredFingerNum = 3;

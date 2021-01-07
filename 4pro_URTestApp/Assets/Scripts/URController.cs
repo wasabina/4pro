@@ -21,6 +21,7 @@ public class URController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        //Application.targetFrameRate = 30;
         PlayerPrefs.DeleteKey("buttonSize");
         endFlag = false;
         panel_end.SetActive(false);
@@ -85,6 +86,10 @@ public class URController : MonoBehaviour
 
     public void endClicked()
     {
+        UR_A.setisFinished();
+        UR_B.setisFinished();
+        UR_C.setisFinished();
+        UR_D.setisFinished();
         string s = PlayerPrefs.GetString("data2", "") + "----中断----" + "\n";
         PlayerPrefs.SetString("data2", s);
         PlayerPrefs.Save();
