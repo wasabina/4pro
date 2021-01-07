@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.Video;
 
-public class UR_B : MonoBehaviour//非利き手固定
+public class UR_C : MonoBehaviour//離散移動
 {
     private int fingerNum = 0;
     public GameObject bm; //ButtonManager
@@ -34,12 +34,14 @@ public class UR_B : MonoBehaviour//非利き手固定
     private Sprite s_setting, s_back;
     private RawImage rawimage;
     private bool postponementFlag;//猶予フラグ
-    private bool playable;
+    private bool playable;//一度スタートしたらfalseに
 
     private string viewstate = "";//今の見えてる/見えてない
     private string old_viewstate = "";//1フレーム前の見えてる/見えてない
     private string touchstate = "";//今のタッチしている/してない
     private string old_touchstate = "";//1フレーム前のタッチしている/してない
+
+    private float posX;
 
     private static bool isFinished;
 
@@ -60,9 +62,11 @@ public class UR_B : MonoBehaviour//非利き手固定
         playable = true;
         isFinished = false;
 
+        posX = 520.0f;
         if (HomeController.getIsLeftHanded())
         {
-            pos.transform.localPosition = new Vector3(520f, 0.0f, 0.0f);
+            posX *= -1.0f;
+            pos.transform.localPosition = new Vector3(posX, 0.0f, 0.0f);
         }
     }
 
@@ -75,9 +79,10 @@ public class UR_B : MonoBehaviour//非利き手固定
         if (fingerNum >= requiredFingerNum)
         {
             rawimage.color = new Color(255.0f, 255.0f, 255.0f, 255.0f);
-            if (playable)
+            if (playable)//最初に3点タッチ成功した1フレームのみ
             {
                 Play();
+                StartCoroutine("move");
                 playable = false;
             }
             if (!timeFlag) timeFlag = true;
@@ -102,7 +107,7 @@ public class UR_B : MonoBehaviour//非利き手固定
                 visibleTime += Time.deltaTime;
                 Text_visibleTime.GetComponent<Text>().text = visibleTime.ToString("F2");
                 postponementFlag = true;
-                StopAllCoroutines();
+                StopCoroutine("postponement");
             }
         }
         else
@@ -164,6 +169,33 @@ public class UR_B : MonoBehaviour//非利き手固定
     {
         yield return new WaitForSeconds(1);
         postponementFlag = false;
+    }
+
+    IEnumerator move()
+    {
+        yield return new WaitForSeconds(19);
+        posX *= -1.0f;
+        pos.transform.localPosition = new Vector3(posX, 0.0f, 0.0f);
+
+        yield return new WaitForSeconds(38);
+        posX *= -1.0f;
+        pos.transform.localPosition = new Vector3(posX, 0.0f, 0.0f);
+
+        yield return new WaitForSeconds(38);
+        posX *= -1.0f;
+        pos.transform.localPosition = new Vector3(posX, 0.0f, 0.0f);
+
+        yield return new WaitForSeconds(38);
+        posX *= -1.0f;
+        pos.transform.localPosition = new Vector3(posX, 0.0f, 0.0f);
+
+        yield return new WaitForSeconds(38);
+        posX *= -1.0f;
+        pos.transform.localPosition = new Vector3(posX, 0.0f, 0.0f);
+
+        yield return new WaitForSeconds(38);
+        posX *= -1.0f;
+        pos.transform.localPosition = new Vector3(posX, 0.0f, 0.0f);
     }
 
     public static bool getisFinished()

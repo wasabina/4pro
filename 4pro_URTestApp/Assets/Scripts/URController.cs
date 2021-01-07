@@ -36,10 +36,25 @@ public class URController : MonoBehaviour
             text_hand.text = "利き手：　左";
         }
 
-        if(UR_A.AisFinished())
+        if(UR_A.getisFinished())
         {
             checkA.text = "済";
             checkA.color = new Color(187.0f/255.0f, 136.0f/255.0f, 255.0f/255.0f, 255.0f/255.0f);
+        }
+        if(UR_B.getisFinished())
+        {
+            checkB.text = "済";
+            checkB.color = new Color(187.0f/255.0f, 136.0f/255.0f, 255.0f/255.0f, 255.0f/255.0f);
+        }
+        if(UR_C.getisFinished())
+        {
+            checkC.text = "済";
+            checkC.color = new Color(187.0f/255.0f, 136.0f/255.0f, 255.0f/255.0f, 255.0f/255.0f);
+        }
+        if(UR_D.getisFinished())
+        {
+            checkD.text = "済";
+            checkD.color = new Color(187.0f/255.0f, 136.0f/255.0f, 255.0f/255.0f, 255.0f/255.0f);
         }
 
     }
@@ -49,23 +64,6 @@ public class URController : MonoBehaviour
     {
 
     }
-
-    /*
-        public void startButtonClicked()
-        {
-            if (iF_name.text == "")
-            {
-                text_alert.text = "お名前を入力してください";
-            }
-            else
-            {
-                string s = PlayerPrefs.GetString("data2", "") + "\n" + TodayNow.Year.ToString() + "/" + TodayNow.Month.ToString() + "/" + TodayNow.Day.ToString() + " " + DateTime.Now.ToLongTimeString() + "\n" + "NAME: " + iF_name.text + "\n";
-                PlayerPrefs.SetString("data2", s);
-                PlayerPrefs.Save();
-                SceneManager.LoadScene("URTest1");
-            }
-        }*/
-
 
     public void endOptionButtonClicked()
     {
@@ -95,18 +93,33 @@ public class URController : MonoBehaviour
 
     public void nextClicked()
     {
-        if (!true)
+        if (UR_A.getisFinished() && UR_B.getisFinished() && UR_C.getisFinished() && UR_D.getisFinished())
         {
-            text_alert.text = "未実施のパターンがあります";
+            SceneManager.LoadScene("End");
         }
         else
         {
-            SceneManager.LoadScene("End");
+            text_alert.text = "未実施のパターンがあります";
         }
     }
 
     public void A()
     {
         SceneManager.LoadScene("A");
+    }
+
+    public void B()
+    {
+        SceneManager.LoadScene("B");
+    }
+
+    public void C()
+    {
+        SceneManager.LoadScene("C");
+    }
+
+    public void D()
+    {
+        SceneManager.LoadScene("D");
     }
 }

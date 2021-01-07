@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.Video;
 
-public class UR_A : MonoBehaviour
+public class UR_A : MonoBehaviour//利き手固定
 {
     private int fingerNum = 0;
     public GameObject bm; //ButtonManager
@@ -27,13 +27,19 @@ public class UR_A : MonoBehaviour
     private float time = 0.0f; //[s]
     private float visibleTime = 0.0f; //[s]
     private float invisibleTime = 0.0f; //[s]
-    private string failedTime = "手が離れた時刻： ";
+    private string failedTime = "3点タッチが離れた時刻： ";
+    private string succeededTime = "3点タッチが成功した時刻： ";
+    private string interruptionTime = "動画が中断された時刻： ";
+    private string resumeTime = "動画が再開した時刻： ";
     private Sprite s_setting, s_back;
     private RawImage rawimage;
     private bool postponementFlag;//猶予フラグ
     private bool playable;
-    private string state = "";//今の見えてる/見えてない
-    private string old_state = "";//1フレーム前の見えてる/見えてない
+
+    private string viewstate = "";//今の見えてる/見えてない
+    private string old_viewstate = "";//1フレーム前の見えてる/見えてない
+    private string touchstate = "";//今のタッチしている/してない
+    private string old_touchstate = "";//1フレーム前のタッチしている/してない
 
     private static bool isFinished;
 
@@ -77,23 +83,39 @@ public class UR_A : MonoBehaviour
             if(!timeFlag) timeFlag = true;
             if(timeFlag)
             {
-                state = "visible";
-                old_state = "visiblse";
+                //タッチできたとき
+                touchstate = "touch";
+                if(touchstate != old_touchstate)
+                {
+                    succeededTime = succeededTime + time.ToString("F2") + ", ";
+                }
+                old_touchstate = "touch";
+
+                //動画が（見えない状態から）見えたとき
+                viewstate = "visible";
+                if(viewstate != old_viewstate)
+                {
+                    resumeTime = resumeTime + time.ToString("F2") + ", ";
+                }
+                old_viewstate = "visible";
+
                 visibleTime += Time.deltaTime;
                 Text_visibleTime.GetComponent<Text>().text = visibleTime.ToString("F2");
                 postponementFlag = true;
+                StopAllCoroutines();
             }
         }
         else
         {
             if(timeFlag)
             {   
-                state = "invisible";
-                if(state != old_state)
+                //タッチが離れたとき
+                touchstate = "non-touch";
+                if(touchstate != old_touchstate)
                 {
                     failedTime = failedTime + time.ToString("F2") + ", ";
                 }
-                old_state = "invisible";
+                old_touchstate = "non-touch";
 
                 if(postponementFlag)
                 {
@@ -104,7 +126,16 @@ public class UR_A : MonoBehaviour
                 }
                 else
                 {
-                    rawimage.color = new Color(255.0f, 255.0f, 255.0f, 0.0f);
+                    //動画が見れなくなったとき
+                    viewstate = "invisible";
+                    if(viewstate != old_viewstate)
+                    {
+                        interruptionTime = interruptionTime + time.ToString("F2") + ", ";
+                        rawimage.color = new Color(255.0f, 255.0f, 255.0f, 0.0f);
+                    }
+                    old_viewstate = "invisible";
+
+                    //rawimage.color = new Color(255.0f, 255.0f, 255.0f, 0.0f);
                     invisibleTime += Time.deltaTime;
                     Text_invisibleTime.GetComponent<Text>().text = invisibleTime.ToString("F2");
                 }
@@ -135,12 +166,12 @@ public class UR_A : MonoBehaviour
         postponementFlag = false;
     }
 
-    public static bool AisFinished()
+    public static bool getisFinished()
     {
         return isFinished;
     }
 
-    public static void setAisFinished()
+    public static void setisFinished()
     {
         isFinished = false;
     }
@@ -170,7 +201,7 @@ public class UR_A : MonoBehaviour
 
     public void NextButtonClicked()
     {
-        string s = PlayerPrefs.GetString("data2", "") + string.Format(SceneManager.GetActiveScene().name + " -> 見えていた時間:{0:000.00}s, 見えていなかった時間:{1:000.00}s, タッチが離れた時刻:{2} ", new String[] {visibleTime.ToString(), invisibleTime.ToString(), failedTime});
+        string s = PlayerPrefs.GetString("data2", "") + string.Format(SceneManager.GetActiveScene().name + " \n見えていた時間:{0:000.00}s,\n見えていなかった時間:{1:000.00}s,\n{2}\n{3}\n{4}\n{5}\n ", new String[] {visibleTime.ToString("F2"), invisibleTime.ToString("F2"), succeededTime, failedTime, interruptionTime, resumeTime});
         PlayerPrefs.SetString("data2", s);
         PlayerPrefs.Save();
         SceneManager.LoadScene("URTest1");

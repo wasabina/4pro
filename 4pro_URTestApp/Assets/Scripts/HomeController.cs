@@ -53,7 +53,7 @@ public class HomeController : MonoBehaviour
             text_alert.text = "お名前を入力してください";
         }else
         {
-            string s = PlayerPrefs.GetString("data2", "") + "\n" + TodayNow.Year.ToString() + "/" + TodayNow.Month.ToString() + "/" + TodayNow.Day.ToString() + " " + DateTime.Now.ToLongTimeString() + "\n" + "NAME: " + iF_name.text + "\n";
+            string s = PlayerPrefs.GetString("data2", "") + "\n--------\n" + TodayNow.Year.ToString() + "/" + TodayNow.Month.ToString() + "/" + TodayNow.Day.ToString() + " " + DateTime.Now.ToLongTimeString() + "\n" + "NAME: " + iF_name.text + "\n";
             PlayerPrefs.SetString("data2", s);
             PlayerPrefs.Save();
             SceneManager.LoadScene("URTest1");

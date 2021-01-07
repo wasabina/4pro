@@ -6,7 +6,7 @@ using UnityEngine.SceneManagement;
 using System;
 using UnityEngine.Video;
 
-public class UR_B : MonoBehaviour//非利き手固定
+public class UR_D : MonoBehaviour//利き手固定
 {
     private int fingerNum = 0;
     public GameObject bm; //ButtonManager
@@ -62,7 +62,7 @@ public class UR_B : MonoBehaviour//非利き手固定
 
         if (HomeController.getIsLeftHanded())
         {
-            pos.transform.localPosition = new Vector3(520f, 0.0f, 0.0f);
+            pos.transform.localPosition = new Vector3(-520f, 0.0f, 0.0f);
         }
     }
 
